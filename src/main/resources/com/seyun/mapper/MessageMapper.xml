@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seyun.mapper.MessageMapper">
+	
+	<select id="getChatExistsOf" resultType="int">
+		select count(mno) from tbl_message where (sender = #{sender} and receiver = #{receiver}) or (sender = #{receiver} and receiver = #{sender})
+	</select>
+	
+	<select id="getChatOf" resultType="com.seyun.domain.MessageVO">
+		select * from tbl_message where (sender = #{sender} and receiver = #{receiver}) or (sender = #{receiver} and receiver = #{sender}) order by mno asc
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_message (sender, receiver, message) values (#{sender}, #{receiver}, #{message})
+	</insert>
+	
+	
+	
+	<select id="getMyChatList" resultType="com.seyun.domain.MessageVO">
+		select * from tbl_message where sender = #{sender} or receiver = #{sender} order by mno asc
+	</select>
+	
+	<select id="getMyChatListCheck" resultType="int">
+		select count(mno) from tbl_message where sender = #{sender} or receiver = #{sender}
+	</select>
+	
+</mapper>
